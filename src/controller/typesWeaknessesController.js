@@ -4,7 +4,7 @@ import matchTypesWeaknesses from '../helper/matchTypesWeaknesses.js';
 export default() => {
     let api = Router();
 
-// 1) (GET) - Testando http://localhost:4000/v1/types-weaknesses/pegar'
+// 1) (GET) - Buscando as fraquezas dos tipos http://localhost:{port}/v1/types-weaknesses/{tipo1/tipo2}'
     api.get('/:tipo1/:tipo2?', async (req, res) => {
 
         const typesWeaknesses = await matchTypesWeaknesses(req.params.tipo1, req.params.tipo2);
