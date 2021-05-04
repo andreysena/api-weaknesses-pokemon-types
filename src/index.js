@@ -15,7 +15,7 @@ app.use(express.json());
 app.use('/v1', routes);
 
 //Iniciando a aplicação
-app.server.listen(config.port)
+app.server.listen(process.env.PORT || config.port)
 console.log(`A aplicação está sendo executada na porta ${app.server.address().port}`)
 
 export default app;
