@@ -15,11 +15,7 @@ export default async (type1, type2 = false) => {
         return list;
     }
 
-    function findFinalWeaknesses(forces, weaknesses, half_damage_from, immunities){
-            
-        weaknesses = weaknesses.reduce((selectWeaknesses, weakness) => {
-            return forces.includes(weakness) ? selectWeaknesses : [...selectWeaknesses, weakness];  
-        }, []);
+    function findFinalWeaknesses(weaknesses, half_damage_from, immunities){
         
         weaknesses = weaknesses.reduce((selectWeaknesses, weakness) => {
             return immunities.includes(weakness) ? selectWeaknesses : [...selectWeaknesses, weakness];
@@ -46,9 +42,6 @@ export default async (type1, type2 = false) => {
     if (type2) {
         const type1Attributes = typesAtrributes[0];
         const type2Attributes = typesAtrributes[1];
-        let type1Forces = [];
-        let type2Forces = [];
-        let groupedTypesForces = [];
         let type1Weaknesses = [];
         let type2Weaknesses = [];
         let groupedTypesWeaknesses = [];
@@ -58,19 +51,6 @@ export default async (type1, type2 = false) => {
         let type1ImmuneFrom = [];
         let type2ImmuneFrom = [];
         let groupedTypesImmunities = [];
-
-        type1Forces.push(
-            type1Attributes.damage_relations.double_damage_to.map(d_d_to => {
-               return d_d_to.name;
-            })
-        );
-        
-        type2Forces.push(
-            type2Attributes.damage_relations.double_damage_to.map(d_d_to => {
-                return d_d_to.name; 
-            })
-        );
-        groupedTypesForces = removeRepetition(type1Forces[0].concat(type2Forces[0]));
 
         type1Weaknesses.push(
             type1Attributes.damage_relations.double_damage_from.map(d_d_from => {
@@ -109,7 +89,7 @@ export default async (type1, type2 = false) => {
         );
         groupedTypesImmunities = removeRepetition(type1ImmuneFrom[0].concat(type2ImmuneFrom[0]));
         
-        typesWeaknesses = findFinalWeaknesses(groupedTypesForces, groupedTypesWeaknesses, groupedHalfDamageFrom, groupedTypesImmunities);
+        typesWeaknesses = findFinalWeaknesses(groupedTypesWeaknesses, groupedHalfDamageFrom, groupedTypesImmunities);
 
         typesWeaknesses = formatWeaknessesNames(typesWeaknesses);
         
